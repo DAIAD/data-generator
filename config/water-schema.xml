@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  <!DOCTYPE schema SYSTEM "structure/pdgfSchema.dtd">-->
+
+<schema name="item"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="structure/pdgfSchema.xsd">	
+	<!-- All data is derived from this starting seed. 
+	If this seed is the same, the generated data will the same on each computer/node/platform. 
+	Change this seed to generate a different data set.-->
+	<seed>1234567890</seed>
+	
+	<rng name="PdgfDefaultRandom"/>
+	<property name="SF" type="double">1</property>
+
+	<table name="water_consumption">
+		<size>1000000*${SF}</size>
+		
+		<field name="household_ID" size="" type="NUMERIC">		
+			<gen_FormulaGenerator>
+				<gen_IdGenerator/>
+				<gen_OtherFieldValueGenerator>
+					<reference field="shower_ID" />
+				</gen_OtherFieldValueGenerator>
+				<formula>generator[0]-generator[1]</formula>
+				<decimalPlaces>0</decimalPlaces>
+			</gen_FormulaGenerator>
+		</field>
+		
+		<field name="shower_ID" size="" type="NUMERIC">		
+			<gen_FormulaGenerator>
+				<gen_IdGenerator/>
+				<formula>generator[0]%50</formula>
+				<decimalPlaces>0</decimalPlaces>
+			</gen_FormulaGenerator>
+		</field>
+		
+		<field name="shower_stops" size="" type="NUMERIC">
+			<gen_LongGenerator>
+				<min>0</min><max>5</max>
+			</gen_LongGenerator>
+		</field>
+		
+		<field name="shower_time" size="" type="NUMERIC">
+			<gen_LongGenerator>
+				<min>10</min><max>2000</max>
+			</gen_LongGenerator>
+		</field>
+		
+		<field name="break_time" size="" type="NUMERIC">
+			<gen_FormulaGenerator>
+				<gen_LongGenerator>
+					<min>1</min><max>50</max>
+				</gen_LongGenerator>
+				<gen_OtherFieldValueGenerator>
+					<reference field="shower_stops" />
+				</gen_OtherFieldValueGenerator>
+				<formula>generator[0]*generator[1]</formula>
+				<decimalPlaces>0</decimalPlaces>
+			</gen_FormulaGenerator>
+		</field>
+		
+		<field name="volume" size="" type="NUMERIC">
+			<gen_FormulaGenerator>
+				<gen_DoubleGenerator>
+					<minD>4.0</minD>
+					<maxD>8.0</maxD>
+					<decimalPlaces>1</decimalPlaces>
+				</gen_DoubleGenerator>
+				<gen_OtherFieldValueGenerator>
+					<reference field="shower_time" />
+				</gen_OtherFieldValueGenerator>
+				<formula>generator[1]/generator[0]</formula>
+				<decimalPlaces>0</decimalPlaces>
+			</gen_FormulaGenerator>
+		</field>
+		
+		<field name="avg_temperature" size="" type="NUMERIC">
+		   <gen_DoubleGenerator>
+				<minD>30.0</minD>
+				<maxD>65.0</maxD>
+				<decimalPlaces>1</decimalPlaces>
+			</gen_DoubleGenerator>
+		</field>
+		
+		<field name="no_of_female" size="" type="NUMERIC">
+			<gen_LongGenerator>
+				<min>0</min><max>3</max>
+			</gen_LongGenerator>
+		</field>
+		
+		<field name="no_of_male" size="" type="NUMERIC">
+		   <gen_LongGenerator>
+				<min>0</min><max>3</max>
+			</gen_LongGenerator>
+		</field>
+		
+	</table>
+</schema>
